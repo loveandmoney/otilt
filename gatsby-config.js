@@ -64,78 +64,6 @@ function trackingPlugins() {
 
 //
 
-function wordpressSources() {
-  const sources = [];
-
-  if (!process.env.GATSBY_WORDPRESS_SOURCE) {
-    return sources;
-  }
-
-  let protocol = `https`;
-
-  if (process.env.GATSBY_WORDPRESS_PROTOCOL) {
-    protocol = process.env.GATSBY_WORDPRESS_PROTOCOL;
-  }
-
-  sources.push({
-    resolve: `gatsby-source-wordpress`,
-    options: {
-      baseUrl: process.env.GATSBY_WORDPRESS_SOURCE,
-      protocol,
-      hostingWPCOM: false,
-      useACF: true,
-      includedRoutes: [`/*/*/media`, `/*/*/posts`, `/*/*/pages`]
-    }
-  });
-
-  return sources;
-}
-
-function shopifySources() {
-  const sources = [];
-
-  if (
-    process.env.GATSBY_SHOPIFY_STORE &&
-    process.env.GATSBY_SHOPIFY_API_KEY &&
-    process.env.GATSBY_SHOPIFY_PASSWORD
-  ) {
-    const endpoint = `https://${process.env.GATSBY_SHOPIFY_API_KEY}:${process.env.GATSBY_SHOPIFY_PASSWORD}@${process.env.GATSBY_SHOPIFY_STORE}.myshopify.com/admin/products.json`;
-
-    sources.push({
-      resolve: `gatsby-source-apiserver`,
-      options: {
-        url: endpoint,
-        method: `get`,
-        headers: {
-          "Content-Type": `application/json`
-        },
-        name: `shopifyAdminProduct`
-      }
-    });
-  }
-
-  if (
-    process.env.GATSBY_SHOPIFY_STORE &&
-    process.env.GATSBY_SHOPIFY_STOREFRONT_TOKEN
-  ) {
-    sources.push({
-      resolve: `gatsby-source-shopify`,
-      options: {
-        shopName: process.env.GATSBY_SHOPIFY_STORE,
-        accessToken: process.env.GATSBY_SHOPIFY_STOREFRONT_TOKEN,
-        verbose: true,
-        paginationSize: 250,
-        includeCollections: [`shop`, `content`]
-      }
-    });
-  }
-
-  return sources;
-}
-
-//
-// Export
-
 module.exports = {
   developMiddleware: app => {
     app.use(
@@ -149,11 +77,11 @@ module.exports = {
     );
   },
   siteMetadata: {
-    title: `Site Title`,
-    titleTemplate: `%s - Site Title`,
-    description: `Site Title is...`,
-    keywords: `Site,keywords`,
-    author: `danielcourtness@gmail.com`,
+    title: `One Thing I Learned Today`,
+    titleTemplate: `%s - One Thing I Learned Today`,
+    description: `Love + Money Intern Learning Calendar`,
+    keywords: `agency,intern,design,development,melbourne,profile,learning`,
+    author: `dan@loveandmoney.agency`,
     url: ``,
     image: `/images/site-image.svg`,
     twitterUsername: `@twitter`
@@ -163,8 +91,8 @@ module.exports = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `Site Title`,
-        short_name: `site-title`,
+        name: `One Thing I Learned Today`,
+        short_name: `otilt`,
         start_url: `/`,
         background_color: `#663399`,
         theme_color: `#663399`,
@@ -172,13 +100,6 @@ module.exports = {
         icon: `${__dirname}/src/assets/images/favicon.png`
       }
     },
-    // {
-    //   resolve: `gatsby-plugin-google-fonts`,
-    //   options: {
-    //     fonts: [``],
-    //     display: `block`
-    //   }
-    // },
     {
       resolve: `gatsby-plugin-sass`,
       options: {
@@ -189,9 +110,8 @@ module.exports = {
       resolve: `gatsby-plugin-purgecss`,
       options: {
         printRejected: true,
-        // develop: true,
         tailwind: true,
-        whitelistPatterns: [/gatsby-/, /glide/, /mb-2/]
+        whitelistPatterns: [/gatsby-/, /glide/]
       }
     },
     `gatsby-plugin-react-helmet`,
@@ -225,8 +145,6 @@ module.exports = {
         name: `pages`
       }
     },
-    // ...wordpressSources(),
-    // ...shopifySources(),
     {
       resolve: `gatsby-transformer-remark`,
       options: {
