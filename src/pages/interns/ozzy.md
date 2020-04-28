@@ -1,6 +1,6 @@
 ---
-templateKey: contact-page
-title: Contact
+templateKey: intern-page
+title: Ozzy
 seoDescription: ""
 seoKeywords: ""
 ---

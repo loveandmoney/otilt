@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
+// import { PropTypes } from "prop-types";
 
 import React, { Component, useContext } from "react";
-import { PropTypes } from "prop-types";
 import { graphql } from "gatsby";
 import { AppContext } from "~context/AppContext";
 import Footer from "~components/Footer";
@@ -9,9 +9,9 @@ import Layout from "~components/Layout";
 import SEO from "~components/SEO";
 import { fancyLog } from "~utils/helpers";
 
-class ContactPageComponent extends Component {
+class InternPageComponent extends Component {
   componentDidMount() {
-    fancyLog(`Contact page`);
+    fancyLog(`Intern page`);
   }
 
   //
@@ -28,7 +28,7 @@ class ContactPageComponent extends Component {
           path={location.pathname}
         />
 
-        <Layout className="contact-page w-full relative flex flex-col justify-between pt-12">
+        <Layout className="intern-page w-full relative flex flex-col justify-between pt-12">
           <section className="grid">
             <h1 className="grid-end-12 my-8 f3">{frontmatter.title}</h1>
           </section>
@@ -40,25 +40,14 @@ class ContactPageComponent extends Component {
   }
 }
 
-ContactPageComponent.propTypes = {
-  frontmatter: PropTypes.shape({
-    title: PropTypes.string,
-    seoDescription: PropTypes.string,
-    seoKeywords: PropTypes.string
-  }).isRequired,
-  location: PropTypes.shape({
-    pathname: PropTypes.string.isRequired
-  }).isRequired
-};
-
 //
 
-const ContactPage = ({ data, location }) => {
+const InternPage = ({ data, location }) => {
   const appContext = useContext(AppContext);
   const { frontmatter } = data.markdownRemark;
 
   return (
-    <ContactPageComponent
+    <InternPageComponent
       appContext={appContext}
       frontmatter={frontmatter}
       location={location}
@@ -66,19 +55,10 @@ const ContactPage = ({ data, location }) => {
   );
 };
 
-ContactPage.propTypes = {
-  data: PropTypes.shape({
-    markdownRemark: PropTypes.shape({
-      frontmatter: PropTypes.shape({})
-    })
-  }).isRequired,
-  location: PropTypes.shape({}).isRequired
-};
-
-export default ContactPage;
+export default InternPage;
 
 export const query = graphql`
-  query ContactPage($id: String!) {
+  query InternPage($id: String!) {
     markdownRemark(id: { eq: $id }) {
       frontmatter {
         title

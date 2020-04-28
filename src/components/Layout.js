@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const Layout = ({ children, className }) => (
-  <main className={`layout transition-transform ${className}`}>{children}</main>
+  <main className={`layout ${className}`}>{children}</main>
 );
 
 export default Layout;

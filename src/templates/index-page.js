@@ -7,7 +7,6 @@ import { AppContext } from "~context/AppContext";
 import Footer from "~components/Footer";
 import Layout from "~components/Layout";
 import SEO from "~components/SEO";
-import FrontmatterBuilder from "~components/frontmatter/FrontmatterBuilder";
 import { fancyLog } from "~utils/helpers";
 
 class IndexPageComponent extends Component {
@@ -29,12 +28,10 @@ class IndexPageComponent extends Component {
           path={location.pathname}
         />
 
-        <Layout className="index-page w-full relative flex flex-col justify-between pt-16">
+        <Layout className="index-page w-full relative flex flex-col justify-between pt-12">
           <section className="grid">
             <h1 className="grid-end-12 my-8 f3">{frontmatter.title}</h1>
           </section>
-
-          <FrontmatterBuilder components={frontmatter.components} />
 
           <Footer />
         </Layout>

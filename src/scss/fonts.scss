@@ -1,28 +1,82 @@
 ////////////
 
-// @font-face {
-//   font-family: "font-name";
-//   src: url("../assets/fonts/font-name/font-name.eot");
-//   src: url("../assets/fonts/font-name/font-name.eot?#iefix")
-//       format("embedded-opentype"),
-//     url("../assets/fonts/font-name/font-name.woff") format("woff"),
-//     url("../assets/fonts/font-name/font-name.ttf") format("truetype"),
-//     url("../assets/fonts/font-name/font-name.svg#svgFontName") format("svg");
-//   font-display: block;
-//   font-weight: normal;
-//   font-style: normal;
-// }
+@font-face {
+  font-family: "editorial-new";
+  src: url("../assets/fonts/editorial-new-regular.eot");
+  src: url("../assets/fonts/editorial-new-regular.eot?#iefix")
+      format("embedded-opentype"),
+    url("../assets/fonts/editorial-new-regular.woff2") format("woff2"),
+    url("../assets/fonts/editorial-new-regular.woff") format("woff"),
+    url("../assets/fonts/editorial-new-regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "fk-display-regular";
+  src: url("../assets/fonts/fkdisplay-regular-webfont.eot");
+  src: url("../assets/fonts/fkdisplay-regular-webfont.eot?#iefix")
+      format("embedded-opentype"),
+    url("../assets/fonts/fkdisplay-regular-webfont.woff2") format("woff2"),
+    url("../assets/fonts/fkdisplay-regular-webfont.woff") format("woff"),
+    url("../assets/fonts/fkdisplay-regular-webfont.ttf") format("truetype"),
+    url("../assets/fonts/fkdisplay-regular-webfont.svg#fk_displayregular")
+      format("svg");
+  font-display: block;
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "fk-grotesk-regular";
+  src: url("../assets/fonts/fkgrotesk-regular-webfont.eot");
+  src: url("../assets/fonts/fkgrotesk-regular-webfont.eot?#iefix")
+      format("embedded-opentype"),
+    url("../assets/fonts/fkgrotesk-regular-webfont.woff2") format("woff2"),
+    url("../assets/fonts/fkgrotesk-regular-webfont.woff") format("woff"),
+    url("../assets/fonts/fkgrotesk-regular-webfont.ttf") format("truetype"),
+    url("../assets/fonts/fkgrotesk-regular-webfont.svg#fk_groteskregular")
+      format("svg");
+  font-display: block;
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "fk-grotesk-mono";
+  src: url("../assets/fonts/fkgrotesk-monospaced-webfont.eot");
+  src: url("../assets/fonts/fkgrotesk-monospaced-webfont.eot?#iefix")
+      format("embedded-opentype"),
+    url("../assets/fonts/fkgrotesk-monospaced-webfont.woff2") format("woff2"),
+    url("../assets/fonts/fkgrotesk-monospaced-webfont.woff") format("woff"),
+    url("../assets/fonts/fkgrotesk-monospaced-webfont.ttf") format("truetype"),
+    url("../assets/fonts/fkgrotesk-monospaced-webfont.svg#fk_groteskmonospaced")
+      format("svg");
+  font-display: block;
+  font-weight: normal;
+  font-style: normal;
+}
 
 ////////////
 
+// mixins
+
 @mixin f1 {
-  // @include sm {
-  // }
+  @include sm {
+    font-size: 80px;
+    line-height: 80px;
+  }
 
-  font-family: "Arial Narrow Bold", sans-serif;
+  @include xs {
+    font-size: 72px;
+    line-height: 72px;
+  }
 
-  font-size: 92px;
-  line-height: 80px;
+  font-family: "fk-display-regular", Arial, Helvetica, sans-serif;
+
+  font-size: 200px;
+  line-height: 200px;
+  letter-spacing: -0.02em;
 }
 
 .f1 {
@@ -32,14 +86,16 @@
 //
 
 @mixin f2 {
-  // @include sm {
-  // }
+  @include sm {
+    font-size: 48px;
+    line-height: 48px;
+  }
 
-  font-family: "Arial Narrow Bold", sans-serif;
+  font-family: "fk-display-regular", Arial, Helvetica, sans-serif;
 
-  font-size: 72px;
-  line-height: 60px;
-  letter-spacing: -0.2px;
+  font-size: 128px;
+  line-height: 128px;
+  letter-spacing: -0.02em;
 }
 
 .f2 {
@@ -49,14 +105,21 @@
 //
 
 @mixin f3 {
-  // @include sm {
-  // }
+  @include sm {
+    font-size: 36px;
+    line-height: 36px;
+    letter-spacing: -0.02em;
+  }
 
-  font-family: "Arial Narrow Bold", sans-serif;
+  @include xs {
+    letter-spacing: -0.01em;
+  }
 
-  font-size: 48px;
-  line-height: 42px;
-  letter-spacing: 1px;
+  font-family: "fk-grotesk-regular", Arial, Helvetica, sans-serif;
+
+  font-size: 96px;
+  line-height: 96px;
+  letter-spacing: -0.03em;
 }
 
 .f3 {
@@ -66,10 +129,20 @@
 //
 
 @mixin f4 {
-  font-family: Helvetica, sans-serif;
+  @include sm {
+    font-size: 30px;
+    line-height: 30px;
+  }
 
-  font-size: 28px;
-  line-height: 36px;
+  @include xs {
+    letter-spacing: -0.02em;
+  }
+
+  font-family: "fk-grotesk-regular", Arial, Helvetica, sans-serif;
+
+  font-size: 66px;
+  line-height: 72px;
+  letter-spacing: -0.02em;
 }
 
 .f4 {
@@ -79,14 +152,17 @@
 //
 
 @mixin f5 {
-  // @include sm {
-  // }
+  @include sm {
+    font-size: 28px;
+    line-height: 30px;
+    letter-spacing: -0.01em;
+  }
 
-  font-family: "Arial Narrow Bold", sans-serif;
+  font-family: "fk-grotesk-regular", Arial, Helvetica, sans-serif;
 
-  font-size: 30px;
-  line-height: 28px;
-  letter-spacing: 0.1px;
+  font-size: 42px;
+  line-height: 42px;
+  letter-spacing: -0.01em;
 }
 
 .f5 {
@@ -95,14 +171,43 @@
 
 //
 
-@mixin b1 {
-  // @include sm {
-  // }
+@mixin f6 {
+  @include sm {
+    font-size: 24px;
+    line-height: 28px;
+  }
 
-  font-family: Helvetica, sans-serif;
+  @include xs {
+    font-size: 16px;
+    line-height: 22px;
+    letter-spacing: -0.005em;
+  }
+
+  font-family: "fk-grotesk-regular", Arial, Helvetica, sans-serif;
+
+  font-size: 28px;
+  line-height: 32px;
+  letter-spacing: -0.01em;
+}
+
+.f6 {
+  @include f6;
+}
+
+//
+
+@mixin b1 {
+  @include xs {
+    font-size: 14px;
+    line-height: 20px;
+    letter-spacing: -0.02em;
+  }
+
+  font-family: "fk-grotesk-regular", Arial, Helvetica, sans-serif;
 
   font-size: 20px;
   line-height: 24px;
+  letter-spacing: -0.01em;
 }
 
 .b1 {
@@ -112,13 +217,17 @@
 //
 
 @mixin b2 {
-  // @include sm {
-  // }
+  @include xs {
+    font-size: 12px;
+    line-height: 16px;
+    letter-spacing: -0.02em;
+  }
 
-  font-family: Helvetica, sans-serif;
+  font-family: "fk-grotesk-regular", Arial, Helvetica, sans-serif;
 
-  font-size: 16px;
-  line-height: 20px;
+  font-size: 15px;
+  line-height: 18px;
+  letter-spacing: -0.01em;
 }
 
 .b2 {
@@ -128,13 +237,21 @@
 //
 
 @mixin b3 {
-  // @include sm {
-  // }
+  @include sm {
+    font-size: 14px;
+    line-height: 14px;
+  }
 
-  font-family: Helvetica, sans-serif;
+  @include xs {
+    font-size: 10px;
+    line-height: 16px;
+    letter-spacing: -0.01em;
+  }
 
-  font-size: 16px;
-  line-height: 20px;
+  font-family: "fk-grotesk-regular", Arial, Helvetica, sans-serif;
+
+  font-size: 13px;
+  line-height: 16px;
 }
 
 .b3 {
@@ -143,25 +260,32 @@
 
 //
 
-@mixin caption {
-  font-family: Helvetica, sans-serif;
-
-  font-size: 12px;
-  line-height: 16px;
-}
-
-.caption {
-  @include caption;
+.mono {
+  font-family: "fk-grotesk-mono", "Courier New", Courier, monospace;
 }
 
 //
 
-em,
-.em {
-  font-style: italic;
+@mixin e1 {
+  font-family: "editorial-new", "Times New Roman", Times, serif;
+  font-size: 90px;
+  line-height: 95px;
+  letter-spacing: -0.03em;
 }
 
-strong,
-.strong {
-  font-weight: bold;
+.e1 {
+  @include e1;
+}
+
+//
+
+@mixin e2 {
+  font-family: "editorial-new", "Times New Roman", Times, serif;
+  font-size: 50px;
+  line-height: 90px;
+  letter-spacing: -0.03em;
+}
+
+.e2 {
+  @include e2;
 }
