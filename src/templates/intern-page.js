@@ -4,15 +4,24 @@
 import React, { Component, useContext } from "react";
 import { graphql } from "gatsby";
 import { AppContext } from "~context/AppContext";
-import Footer from "~components/Footer";
 import Layout from "~components/Layout";
 import SEO from "~components/SEO";
 import { fancyLog } from "~utils/helpers";
 
 class InternPageComponent extends Component {
+  state = {};
+
   componentDidMount() {
     fancyLog(`Intern page`);
   }
+
+  //
+
+  //
+  // those affect the state variables
+
+  // handleClick = () => {}
+  // handleHover = () => {}
 
   //
 
@@ -31,11 +40,17 @@ class InternPageComponent extends Component {
         />
 
         <Layout className="intern-page w-full relative flex flex-col justify-between pt-12">
-          <section className="grid">
-            <h1 className="grid-end-12 my-8 f3">{frontmatter.title}</h1>
-          </section>
+          {/* banner section */}
 
-          <Footer />
+          {/* calendar section */}
+          {/* - fixed M-F elements at the top */}
+          {/* - grid with hover effects and click effects */}
+
+          {/* Use tailwind where possible */}
+
+          {/* <section className="grid">
+            <h1 className="grid-end-12 my-8 f3">{frontmatter.title}</h1>
+          </section> */}
         </Layout>
       </>
     );
