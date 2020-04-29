@@ -1,6 +1,6 @@
 ---
-templateKey: index-page
-title: Home
+templateKey: intern-page
+title: Will
 seoDescription: ""
 seoKeywords: ""
 ---

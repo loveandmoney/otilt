@@ -19,6 +19,8 @@ class InternPageComponent extends Component {
   render() {
     const { frontmatter, location } = this.props;
 
+    // @Will you'll be spending most of your time in here
+
     return (
       <>
         <SEO
