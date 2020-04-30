@@ -1,36 +1,35 @@
+/*
+  dc : the ultimate goal when using Tailwind is to write as little CSS as possible
+*/
+
+// .intern-page {
+// }
+
+// ---------------------------------------- //
+// old / deleted stuff
+
+/*
+// dc : moved this to fonts.scss
 .text-huge {
   font-size: 7rem;
   line-height: initial;
-}
-
-.w-20vw {
-  width: 20vw;
 }
 
 .intern-page {
   min-height: 100vh;
 
   &__calendar {
-
     &__square {
-    
-      &:focus {
-        outline: none;
-      }
+      // dc : button:focus outlines are covered in base.scss
 
-      &--clicked {
-        // @Dan I'm guessing this is the only way to access this guy?
-        .intern-page__calendar__square__overlay {
-          opacity: 1; // tailwind has an opacity-100 class
-        }
-      }
-    } 
+      // &--clicked {
+      //   // @Dan I'm guessing this is the only way to access this guy?      
+      //   // dc : yeah, but when it gets ~3 levels deep I tend to make unique components
+      //   .intern-page__calendar__square__overlay {
+      //     opacity: 1; // tailwind has an opacity-100 class
+      //   }
+      // }
+    }
   }
-  // @Dan the reason these little important guys are here is cause I couldn't figure out how to get rid of the header, so just hacked it for the time being
-  // I use important to remind me that it's a hack fix and should be addressed later
-  padding-top: 0 !important; // !important should almost never be used
 }
-
-.header {
-  display: none !important; // tailwind has a 'hidden' class that does this
-}
+*/

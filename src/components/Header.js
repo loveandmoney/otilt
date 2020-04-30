@@ -12,8 +12,10 @@ class HeaderComponent extends Component {
   render() {
     // const { appContext } = this.props;
 
+    // dc : added a 'hidden' class here, though we could potentially remove this component entirely
+
     return (
-      <header className="header w-full fixed top-0 right-0 left-0 z-30 py-2 bg-white border-b-black">
+      <header className="header w-full fixed top-0 right-0 left-0 z-30 py-2 bg-white border-b-black hidden">
         <nav className="grid">
           <div className="grid-end-12 flex items-center justify-between">
             <Link to="/" className="block text-black">
