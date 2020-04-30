@@ -1,3 +1,37 @@
 .intern-page {
   min-height: 100vh;
+  background-color: #000000;
+  color: #ffffff;
+
+  .banner {
+    .text-huge {
+      font-size: 7rem;
+      line-height: initial;
+    }
+  }
+
+  .calendar {
+    .w-20vw{
+      width: 20vw;
+    }
+    .calendar-square{
+      &:focus{
+        outline: none;
+      }
+      .calendar-square__overlay{
+        opacity: 0;
+      }
+    }
+    .calendar-square--clicked{
+     .calendar-square__overlay {
+       opacity: 1;
+     }   
+    }
+  }
+
+  padding-top: 0 !important;
+}
+
+.header {
+  display: none !important;
 }
