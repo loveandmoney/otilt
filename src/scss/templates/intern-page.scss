@@ -1,73 +1,33 @@
+.text-huge {
+  font-size: 7rem;
+  line-height: initial;
+}
+
+.w-20vw {
+  width: 20vw;
+}
+
 .intern-page {
   min-height: 100vh;
 
-  //
-  // css colors
-  //
-  // if you look in tailwind.config.js, you'll see white and black are
-  // already defined. Those definitions will auto-generate classes for
-  // you to use in JSX:
-  // - bg-black
-  // - bg-white
-  // - text-black
-  // - text-white
+  &__calendar {
 
-  background-color: #000000; // remove in favour of bg-black
-  color: #ffffff; // remove in favour of text-white
-
-  //--------------------//
-
-  // SCSS Scope
-  //
-  // Rather than define a new class called 'banner', this should
-  // be called 'intern-page__banner'. The reason is, if you created
-  // a '.banner' class in a different file at the global level,
-  // its properties would affect your definition here.
-
-  // You can do this in SCSS by using &, which is a substitute for
-  // the parent in the currrent context
-
-  &__banner {
-    // .intern-page__banner
-    &__text {
-      // .intern-page__banner__text
-      &--huge {
-      } // .intern-page__banner__text--huge
-      &--small {
-      } // .intern-page__banner__text--small
-    }
-  }
-
-  .banner {
-    .text-huge {
-      // may be more suitable in global scope
-      font-size: 7rem;
-      line-height: initial;
-    }
-  }
-
-  .calendar {
-    // &__calendar (.intern-page__calendar) or move to global scope/its own component file
-    .w-20vw {
-      width: 20vw;
-    } // add a line to separate entries
-    // &__square {//
-    .calendar-square {
-      // &__square (.intern-page__calendar__square)
+    &__square {
+    
       &:focus {
         outline: none;
-      } // add a line to separate entries
-      .calendar-square__overlay {
-        opacity: 0; // tailwind has an opacity-0 class
       }
-    } // add a line to separate entries
-    .calendar-square--clicked {
-      .calendar-square__overlay {
-        opacity: 1; // tailwind has an opacity-100 class
-      }
-    }
-  }
 
+      &--clicked {
+        // @Dan I'm guessing this is the only way to access this guy?
+        .intern-page__calendar__square__overlay {
+          opacity: 1; // tailwind has an opacity-100 class
+        }
+      }
+    } 
+  }
+  // @Dan the reason these little important guys are here is cause I couldn't figure out how to get rid of the header, so just hacked it for the time being
+  // I use important to remind me that it's a hack fix and should be addressed later
   padding-top: 0 !important; // !important should almost never be used
 }
 
