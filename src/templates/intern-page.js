@@ -9,8 +9,16 @@ import SEO from "~components/SEO";
 import { fancyLog } from "~utils/helpers";
 
 class InternPageComponent extends Component {
+  // dc: state goes here
+  // state = {
+  //   openCalendarSquare: null
+  // }
+
+  //
+
   numDummyDays = 31;
 
+  // This is good
   dummyDayData = Array(this.numDummyDays)
     .fill(null)
     .map((_, i) => {
@@ -21,11 +29,12 @@ class InternPageComponent extends Component {
       };
     });
 
+  // dc: constructors are no longer necessary
   constructor(props) {
-    super(props);
+    super(props); // dc: super no longer necessary
     this.state = { openCalendarSquare: null };
-    this.handleClick = this.handleClick.bind(this);
-    this.handleMouseLeave = this.handleMouseLeave.bind(this);
+    this.handleClick = this.handleClick.bind(this); // dc: .bind isn't required
+    this.handleMouseLeave = this.handleMouseLeave.bind(this); // dc: .bind isn't required
   }
 
   componentDidMount() {
@@ -40,7 +49,7 @@ class InternPageComponent extends Component {
   handleClick = e => {
     const day = parseInt(
       e.currentTarget.attributes.getNamedItem(`data-day-count`).value
-    );
+    ); // dc: separate logical blocks with 1 empty line
     this.setState({
       openCalendarSquare: day
     });
@@ -49,7 +58,7 @@ class InternPageComponent extends Component {
   handleMouseLeave = e => {
     const day = parseInt(
       e.currentTarget.attributes.getNamedItem(`data-day-count`).value
-    );
+    ); // dc: separate logical blocks with 1 empty line
     // If we just mouse-left the current open square, then close it
     if (this.state.openCalendarSquare === day) {
       this.setState({
@@ -91,15 +100,39 @@ class InternPageComponent extends Component {
               <div className="w-20vw">T</div>
               <div className="w-20vw">F</div>
             </div>
+
+            {/* // dc: more lines between disparate template components */}
+            {/* // dc: this flexer should be a ul */}
+
             <div className="flex flex-row flex-wrap">
               {this.dummyDayData.map(({ dayCount, date, learned }, i) => {
+                // dc: call this "index"; if we have nested indices I don't want to see j, k, ...
+
                 return (
-                  // @Dan how do we make these square? flex-wrap and width = vh doesnt work
-                  //      at the momment these are width=20% and height = some fixed amount
-                  //
-                  // @Dan how do we make the borders blend in with each other? Atm we just have regular dotted borders
-                  //
-                  // @Dan this class list logic looks messy af, I sometimes use a front-end package called classnames to clean up classname logic, lemme know if its okay to install that.
+                // @Dan how do we make these square? flex-wrap and width = vh doesnt work
+                //      at the momment these are width=20% and height = some fixed amount
+                //
+                // @Dan how do we make the borders blend in with each other? Atm we just have regular dotted borders
+                //
+                // @Dan this class list logic looks messy af, I sometimes use a front-end package called classnames to clean up classname logic, lemme know if its okay to install that.
+
+                  /*
+                  dc:
+                  - You've got px-40 on 'intern-page', and the calendar squares are children of that. Move px-40 to the 
+                    banner section, and that'll solve the width. Then, add this to the SCSS:
+                      width: 20vw;
+                      height: 20vw;
+
+                  - OK to install classnames, but you can refine this with ternary operators and object destructuring, e.g.
+                      const { openCalendarSquare } = this.state;
+
+                      className={`${openCalendarSquare === dayCount ? `calendar-square--clicked` : `cursor-pointer`}
+
+                  - 'calendar-square' should be an li
+                  - Clickable 'calendar-square' should be a button
+                  - each 'calendar-square' li should have a unique key property
+                  - check the intern-page.scss for notes on BEM class hierarchy
+                  */
                   <div
                     className={`calendar-square relative w-1/5 h-32 border-dotted border border-white ${this
                       .state.openCalendarSquare === dayCount &&
@@ -109,6 +142,8 @@ class InternPageComponent extends Component {
                     onClick={this.handleClick}
                     onMouseLeave={this.handleMouseLeave}
                     // @Dan I'm new to the following 3 things but ESLint said I had to - assuming those are your settings?
+                    // dc: Yeah, for accessibility, if it's clickable it should be a button. Instead of a div,
+                    //    this should be an <li><button type="button></button></li>
                     role="textbox"
                     tabIndex={i}
                     onKeyDown={this.handleClick}
@@ -125,14 +160,6 @@ class InternPageComponent extends Component {
               })}
             </div>
           </section>
-          {/* - fixed M-F elements at the top */}
-          {/* - grid with hover effects and click effects */}
-
-          {/* Use tailwind where possible */}
-
-          {/* <section className="grid">
-            <h1 className="grid-end-12 my-8 f3">{frontmatter.title}</h1>
-          </section> */}
         </Layout>
       </>
     );
