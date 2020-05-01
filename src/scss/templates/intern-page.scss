@@ -1,35 +1,110 @@
-/*
-  dc : the ultimate goal when using Tailwind is to write as little CSS as possible
-*/
-
-// .intern-page {
-// }
-
-// ---------------------------------------- //
-// old / deleted stuff
-
-/*
-// dc : moved this to fonts.scss
-.text-huge {
-  font-size: 7rem;
-  line-height: initial;
+// Couldn't find the button margins in the design docs so I guessed
+.top-2{
+  top: 2rem;
 }
 
-.intern-page {
-  min-height: 100vh;
-
-  &__calendar {
-    &__square {
-      // dc : button:focus outlines are covered in base.scss
-
-      // &--clicked {
-      //   // @Dan I'm guessing this is the only way to access this guy?      
-      //   // dc : yeah, but when it gets ~3 levels deep I tend to make unique components
-      //   .intern-page__calendar__square__overlay {
-      //     opacity: 1; // tailwind has an opacity-100 class
-      //   }
-      // }
-    }
-  }
+.right-2{
+  right: 2rem;
 }
-*/
+
+.bottom-2{
+  bottom: 2rem;
+}
+
+.left-2{
+  left: 2rem;
+}
+
+.top-half {
+  top: 50vh
+}
+
+// @dan for some reason the left and right buttons already have a margin - left/right = 0 puts them in the right looking spot, not at the actual edge
+
+// our version of tailwind doesn't seem to have these classes, so I added them
+.rotate-90	{
+  transform: rotate(90deg);
+}
+
+.rotate-180	{
+  transform: rotate(180deg);
+}
+
+.rotate-270	{
+  transform: rotate(-90deg);
+}
+
+.rounded-18 {
+  border-radius: 18px;
+}
+
+// design spec for buttons
+.w-212 {
+  width: 212px;
+}
+
+// theme colours
+
+.text-pink{
+  color: #E683A4;
+}
+
+.bg-pink{
+  background-color: #E683A4;
+}
+
+.text-brown {
+  color: #502D1B;
+}
+
+.bg-brown {
+  background-color: #502D1B;
+}
+
+.text-gold{
+  color: #F4B233;
+}
+
+.bg-gold{
+  background-color: #F4B233;
+}
+
+.text-blue-royal {
+  color: #1B65CE;
+}
+
+.bg-blue-royal {
+  background-color: #1B65CE;
+}
+
+.text-blue-light {
+  color: #5BB6EA;
+}
+
+.bg-blue-light {
+  background-color: #5BB6EA;
+}
+
+.text-red {
+  color: #D23C1C;
+}
+
+.bg-red {
+  background-color: #D23C1C;
+}
+
+.text-lipstick {
+  color: #B4204C;
+}
+
+.bg-lipstick {
+  background-color: #B4204C;
+}
+
+.text-green {
+  color: #9AD9B1;
+}
+
+.bg-green {
+  background-color: #9AD9B1;
+}

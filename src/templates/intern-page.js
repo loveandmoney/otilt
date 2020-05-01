@@ -10,31 +10,89 @@ import { fancyLog } from "~utils/helpers";
 
 class InternPageComponent extends Component {
   state = {
-    openCalendarSquare: null
+    openCalendarSquare: null,
+    theme: `default`
   };
 
-  numDummyDays = 31;
-
-  // This is good
-  dummyDayData = Array(this.numDummyDays)
-    .fill(null)
-    .map((_, i) => {
-      return {
-        dayCount: i + 1,
-        date: `${i + 1}.7`,
-        learned: `I learned this thing`
-      };
-    });
+  // @Dan so is this theme data gonna feed in from markdown later? I suppose we'll use inline styles? and dangerouslySetHTML?
+  themes = {
+    default: {
+      bgStyle: `bg-black`,
+      fontStyle: `text-white`,
+      lessonStyle: `bg-white text-black`,
+      // we use <br />'s rather than padding, we wrap these babies in a plain old span, so the semantics and style can be handled by render
+      headingText: (
+        <span>
+          One Thing I<br />
+          Learned Today
+        </span>
+      )
+    },
+    technical: {
+      bgStyle: `bg-green`,
+      fontStyle: `text-lipstick`,
+      lessonStyle: `bg-lipstick text-green`,
+      headingText: (
+        <span>
+          Old mates Figma,
+          <br />
+          Dimension, Principle &amp;
+          <br />
+          Pantone.
+        </span>
+      )
+    },
+    life: {
+      bgStyle: `bg-red`,
+      fontStyle: `text-blue-light`,
+      lessonStyle: `bg-blue-light text-red`,
+      headingText: (
+        <span>
+          Vegan cheezies, Fairy
+          <br />
+          Floss, &amp; first time
+          <br />
+          birthday cakes.
+        </span>
+      )
+    },
+    design: {
+      bgStyle: `bg-blue-royal`,
+      fontStyle: `text-gold`,
+      lessonStyle: `bg-gold text-blue-royal`,
+      headingText: (
+        <span>
+          The age old question:
+          <br />
+          Is This Graphic Designs?
+          <br />
+          (Hint: 5 degrees)
+        </span>
+      )
+    },
+    office: {
+      bgStyle: `bg-brown`,
+      fontStyle: `text-pink`,
+      lessonStyle: `bg-pink text-brown`,
+      headingText: (
+        <span>
+          Pat’s pants, passwords
+          <br />
+          &amp; douchebag pool
+          <br />
+          table owners.
+        </span>
+      )
+    }
+  };
 
   componentDidMount() {
     fancyLog(`Intern page`);
   }
 
   //
-  // dc : I use '//' like the line above to separate JSX and SCSS into logical sections, helps when scrolling through big files
 
-  handleClick = e => {
-    // dc : removed redundant variable
+  handleMouseOver = e => {
     this.setState({
       openCalendarSquare: parseInt(
         e.currentTarget.attributes.getNamedItem(`data-day-count`).value
@@ -42,22 +100,20 @@ class InternPageComponent extends Component {
     });
   };
 
-  handleMouseLeave = () => {
-    // dc : if you mouseleave any square, none are active
+  //
+
+  handleMouseOut = () => {
     this.setState({
       openCalendarSquare: null
     });
+  };
 
-    // const day = parseInt(
-    //   e.currentTarget.attributes.getNamedItem(`data-day-count`).value
-    // );
+  //
 
-    // If we just mouse-exited the current open square, then close it
-    // if (this.state.openCalendarSquare === day) {
-    //   this.setState({
-    //     openCalendarSquare: null
-    //   });
-    // }
+  handleThemeButtonClick = e => {
+    this.setState({
+      theme: e.currentTarget.attributes.getNamedItem(`data-theme`).value
+    });
   };
 
   //
@@ -65,8 +121,47 @@ class InternPageComponent extends Component {
   render() {
     const { frontmatter, location } = this.props;
 
-    // dc : use top-line object destructuring to prevent repeating "this.state" or "this.props" in the JSX
-    const { openCalendarSquare } = this.state;
+    const { days } = frontmatter;
+
+    const { openCalendarSquare, theme } = this.state;
+
+    const { bgStyle, fontStyle, lessonStyle, headingText } = this.themes[theme];
+
+    const Heading = ({ children }) => {
+      return (
+        <h1
+          className={`mt-6 mb-12 font-bold animation-appear ${
+            theme === `default` ? `f1` : `f2`
+          }`}
+        >
+          {children}
+        </h1>
+      );
+    };
+
+    const absentDaySVG = (
+      <div className="square">
+        <svg className="absolute" style={{ width: `100%`, height: `100%` }}>
+          <line
+            strokeDasharray="2,2"
+            x1="0"
+            y1="100%"
+            x2="100%"
+            y2="0"
+            style={{ stroke: `rgb(255,255,255)`, strokeWidth: 2 }}
+          />
+
+          <line
+            strokeDasharray="2,2"
+            x1="100%"
+            y1="100%"
+            x2="0"
+            y2="0"
+            style={{ stroke: `rgb(255,255,255)`, strokeWidth: 2 }}
+          />
+        </svg>
+      </div>
+    );
 
     return (
       <>
@@ -76,34 +171,87 @@ class InternPageComponent extends Component {
           customKeywords={frontmatter.seoKeywords}
           path={location.pathname}
         />
+        {/* @Dan there's still a padding at the top of the main container, which kinda stuffs up the opening viewport */}
+        <Layout
+          className={`intern-page w-full relative flex flex-col justify-between pt-12 pb-48 transition-background ${bgStyle} ${fontStyle}`}
+        >
+          {/* // */}
+          {/* @Dan I wrestled with these buttons for a bit.. tried one container, no container, settled on this structure..
+               So I'm basically just using 4x h-full or w-full containers to center the buttons. It's a bit weird. Ain't perfect (bottom and top aren't the same for some reason..)
+    
+               // also, there's a lot of repititon here, between and within the buttons, 
+               // it'd be nice if we did a map with parameters feeding from md or some static varible or something, 
+               // but might be tricky with the layout sitch. Lemme know thoughts.
+           */}
+          <div className="flex w-full z-20 justify-center fixed top-2">
+            <button
+              type="button"
+              data-theme="office"
+              onClick={this.handleThemeButtonClick}
+              className={`w-212 fixed z-20 border-2 border-solid transition-background rounded-18 ${
+                theme === `office`
+                  ? `${lessonStyle}`
+                  : `border-white ${bgStyle}`
+              }`}
+            >
+              OFFICE
+            </button>
+          </div>
+          <div className="flex flex-col h-screen w-0 z-20 justify-center items-center fixed right-2">
+            <button
+              type="button"
+              data-theme="design"
+              onClick={this.handleThemeButtonClick}
+              className={`w-212 fixed z-20 border-2 border-solid transition-background rounded-18 rotate-90 ${
+                theme === `design`
+                  ? `${lessonStyle}`
+                  : `border-white ${bgStyle}`
+              }`}
+            >
+              DESIGN
+            </button>
+          </div>
+          <div className="flex w-full z-20 justify-center fixed bottom-2">
+            <button
+              type="button"
+              data-theme="life"
+              onClick={this.handleThemeButtonClick}
+              className={`w-212 fixed z-20 border-2 border-solid transition-background rounded-18 rotate-180 ${
+                theme === `life` ? `${lessonStyle}` : `border-white ${bgStyle}`
+              }`}
+            >
+              LIFE
+            </button>
+          </div>
+          <div className="flex flex-col h-screen w-0 z-20 justify-center items-center fixed left-2">
+            <button
+              type="button"
+              data-theme="technical"
+              onClick={this.handleThemeButtonClick}
+              className={`w-212 fixed z-20 border-2 border-solid transition-background rounded-18 rotate-270 ${
+                theme === `technical`
+                  ? `${lessonStyle}`
+                  : `border-white ${bgStyle}`
+              }`}
+            >
+              TECHNICAL
+            </button>
+          </div>
 
-        {/* dc : removed all custom BEM classes; 100% Tailwind */}
-        {/* dc : bump the padding-bottom */}
-        <Layout className="intern-page w-full relative flex flex-col justify-between pt-12 pb-48 bg-black text-white">
-          {/* dc : rather than px-40 we can just <br> the text where we need to */}
-          {/* dc : added classes to fonts.scss (f1, f2, f3, f4, b1, b2, b3) */}
-          {/* dc : adjusted margins/padding */}
-          {/* dc : removed redundant 'banner' class */}
           <section className="w-full h-screen flex flex-col justify-center text-center">
             <h3 className="b2">IN TERN PRESENTS</h3>
 
-            <h1 className="mt-6 mb-12 f1 font-bold">
-              One Thing I <br />
-              Learned Today
-            </h1>
+            <Heading>{headingText}</Heading>
 
             <p className="b2">FOR THREE MONTHS. AT LOVE + MONEY.</p>
             <p className="mt-1 b2">200 GERTRUDE STREET, FITZROY, INTERNET.</p>
             <p className="mt-1 f2">&#x2193;</p>
           </section>
 
-          {/* dc : moved px-40 to parent container to prevent duplicate definition in children */}
-          {/* dc : reduced padding (px-40 too much) */}
           <section className="w-full flex flex-col px-24">
-            {/* dc : changed to ol */}
-            {/* dc : added classes from fonts.scss */}
-            {/* dc : adjusted padding */}
-            <ol className="flex text-center">
+            <ol
+              className={`flex text-center sticky top-0 z-10 transition-background ${bgStyle}`}
+            >
               <li className="w-1/5 py-3 f4">M</li>
               <li className="w-1/5 py-3 f4">T</li>
               <li className="w-1/5 py-3 f4">W</li>
@@ -111,54 +259,50 @@ class InternPageComponent extends Component {
               <li className="w-1/5 py-3 f4">F</li>
             </ol>
 
-            {/* dc : changed to ol (my bad - days are 'ordered') */}
             <ol className="flex flex-wrap">
-              {this.dummyDayData.map(({ dayCount, date, learned }, index) => {
+              {days.map(({ absent, dayCount, date, learned }, index) => {
                 const thisSquareIsActive = openCalendarSquare === dayCount;
 
-                // dc : added booleans to help describe your border checks
-                // dc : changed border-* class checks to ternaries; if you don't use ternaries, you'll get things like 'undefined' or 'false' rendered as classNames
+                const withBorderBottom = index >= days.length - 5;
 
-                const withBorderBottom = index >= this.dummyDayData.length - 5;
                 const withBorderRight =
-                  (index + 1) % 5 === 0 ||
-                  index === this.dummyDayData.length - 1;
+                  (index + 1) % 5 === 0 || index === days.length - 1;
 
-                // dc : shift border-white class to front to group position attributes together
-                // dc : order position classes per CSS spec: top, right, bottom, left (yes, I'm a hopeless fucking pedant)
                 return (
                   <li
-                    key={dayCount}
+                    key={`${date}`} // atm this will make the console cry cause there are heaps of null dates in wil.md, I will fix later
                     className={`w-1/5 relative border-dotted border-white border-t-2 ${
                       withBorderRight ? `border-r-2` : ``
                     } ${withBorderBottom ? `border-b-2` : ``} border-l-2 `}
                   >
-                    {/* dc : changed thisSquareIsActive && cursor-default to ternary */}
-                    {/* dc : added block class to buttons (days weren't square) */}
-                    <button
-                      type="button"
-                      className={`square relative block ${
-                        thisSquareIsActive ? `cursor-default` : ``
-                      }`}
-                      onClick={this.handleClick}
-                      data-day-count={dayCount}
-                      onMouseLeave={this.handleMouseLeave}
-                    >
-                      <div className="w-full h-full absolute top-0 p-4 flex flex-col justify-between">
-                        {/* dc : using semantic text tags */}
-                        <h3 className="self-end">{date}</h3>
-                        <h2 className="self-start text-2xl font-medium">{`Day ${dayCount}`}</h2>
-                      </div>
-
-                      {/* dc : you don't need a '--clicked' class since you have thisSquareIsActive already */}
-                      <div
-                        className={`${
-                          thisSquareIsActive ? `opacity-100` : `opacity-0`
-                        } transition-opacity w-full h-full absolute top-0 p-4 bg-white text-black text-left font-medium`}
+                    {absent ? (
+                      absentDaySVG
+                    ) : (
+                      <button
+                        type="button"
+                        className="square relative block cursor-default"
+                        data-day-count={dayCount}
+                        onMouseOver={this.handleMouseOver}
+                        onMouseOut={this.handleMouseOut} // @Derg using mouseout so that it handles leaving the calendar altogether - know any way to do this wiht one handler or is this ok?
+                        onBlur={this.handleMouseOut} // accessbility stuff <-->
+                        onFocus={this.handleMouseOver}
                       >
-                        {learned}
-                      </div>
-                    </button>
+                        <div>
+                          <div className="w-full h-full absolute top-0 p-4 flex flex-col justify-between">
+                            <h3 className="self-end">{date}</h3>
+                            <h2 className="self-start text-2xl font-medium">{`Day ${dayCount}`}</h2>
+                          </div>
+
+                          <div
+                            className={`${
+                              thisSquareIsActive ? `opacity-100` : `opacity-0`
+                            } transition-opacity w-full h-full absolute top-0 p-4 text-left font-medium transition-background ${lessonStyle}`}
+                          >
+                            <p>{learned}</p>
+                          </div>
+                        </div>
+                      </button>
+                    )}
                   </li>
                 );
               })}
@@ -194,6 +338,12 @@ export const query = graphql`
         title
         seoDescription
         seoKeywords
+        days {
+          absent
+          dayCount
+          date
+          learned
+        }
       }
     }
   }
