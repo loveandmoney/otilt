@@ -1,36 +1,40 @@
 // Couldn't find the button margins in the design docs so I guessed
-.top-2{
+// @Wil - it's generally best to use something like "top-0 pt-2"; the container is top-aligned with top padding
+.top-2 {
   top: 2rem;
 }
 
-.right-2{
+.right-2 {
   right: 2rem;
 }
 
-.bottom-2{
+.bottom-2 {
   bottom: 2rem;
 }
 
-.left-2{
+.left-2 {
   left: 2rem;
 }
 
 .top-half {
-  top: 50vh
+  top: 50vh;
 }
 
 // @dan for some reason the left and right buttons already have a margin - left/right = 0 puts them in the right looking spot, not at the actual edge
+// @Wil - You might need to reset button styles (margin: 0 in base.scss), or use the CSS inspector to figure out where those are coming from
+//        Otherwise the new approach in the intern-page.js file might help sort this out.
 
 // our version of tailwind doesn't seem to have these classes, so I added them
-.rotate-90	{
+// @Wil - good ones, but these could probably go in common.scss, as they aren't specific to intern-page.scss
+.rotate-90 {
   transform: rotate(90deg);
 }
 
-.rotate-180	{
+.rotate-180 {
   transform: rotate(180deg);
 }
 
-.rotate-270	{
+.rotate-270 {
   transform: rotate(-90deg);
 }
 
@@ -39,72 +43,75 @@
 }
 
 // design spec for buttons
+// @Wil - I would call this .intern-page__button, or something, and give it this fixed width if design called for it.
+//        Otherwise use px/py so the text can dictate the button width.
 .w-212 {
   width: 212px;
 }
 
 // theme colours
+// @Wil - move these to tailwind.config.js, check the TW docs if you need more info
 
-.text-pink{
-  color: #E683A4;
+.text-pink {
+  color: #e683a4;
 }
 
-.bg-pink{
-  background-color: #E683A4;
+.bg-pink {
+  background-color: #e683a4;
 }
 
 .text-brown {
-  color: #502D1B;
+  color: #502d1b;
 }
 
 .bg-brown {
-  background-color: #502D1B;
+  background-color: #502d1b;
 }
 
-.text-gold{
-  color: #F4B233;
+.text-gold {
+  color: #f4b233;
 }
 
-.bg-gold{
-  background-color: #F4B233;
+.bg-gold {
+  background-color: #f4b233;
 }
 
 .text-blue-royal {
-  color: #1B65CE;
+  color: #1b65ce;
 }
 
 .bg-blue-royal {
-  background-color: #1B65CE;
+  background-color: #1b65ce;
 }
 
 .text-blue-light {
-  color: #5BB6EA;
+  color: #5bb6ea;
 }
 
 .bg-blue-light {
-  background-color: #5BB6EA;
+  background-color: #5bb6ea;
 }
 
 .text-red {
-  color: #D23C1C;
+  color: #d23c1c;
 }
 
 .bg-red {
-  background-color: #D23C1C;
+  background-color: #d23c1c;
 }
 
 .text-lipstick {
-  color: #B4204C;
+  color: #b4204c;
 }
 
 .bg-lipstick {
-  background-color: #B4204C;
+  background-color: #b4204c;
 }
 
 .text-green {
-  color: #9AD9B1;
+  color: #9ad9b1;
 }
 
 .bg-green {
-  background-color: #9AD9B1;
+  background-color: #9ad9b1;
 }

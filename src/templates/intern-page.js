@@ -15,6 +15,7 @@ class InternPageComponent extends Component {
   };
 
   // @Dan so is this theme data gonna feed in from markdown later? I suppose we'll use inline styles? and dangerouslySetHTML?
+  // @Wil - Yeah, that'll werk
   themes = {
     default: {
       bgStyle: `bg-black`,
@@ -172,6 +173,7 @@ class InternPageComponent extends Component {
           path={location.pathname}
         />
         {/* @Dan there's still a padding at the top of the main container, which kinda stuffs up the opening viewport */}
+        {/* @Wil - remove "pt-12" from the Layout className */}
         <Layout
           className={`intern-page w-full relative flex flex-col justify-between pt-12 pb-48 transition-background ${bgStyle} ${fontStyle}`}
         >
@@ -182,6 +184,29 @@ class InternPageComponent extends Component {
                // also, there's a lot of repititon here, between and within the buttons, 
                // it'd be nice if we did a map with parameters feeding from md or some static varible or something, 
                // but might be tricky with the layout sitch. Lemme know thoughts.
+           */}
+
+          {/*
+            @Wil
+            
+            I think having one container per button is probably fine, since markdown might have 0, 1, 2, 3 or all 4 defined.
+            The reason for the top/bottom buttons being different is that the buttons themselves are fixed and aligned to the top of the parent containers, which are also fixed.
+            You wouldn't need to put next a second fixed element inside a fixed parent unless you're doing something fancy with clipping.
+
+            I'd suggest rewriting these as fixed containers with padding and relative/flex-aligned buttons (being mindful of parent/child pointer-events). This would
+            also mean that instead of setting a fixed width for the buttons, you can use py/px, and they'll resize automatically based on the button text itself, but still
+            be center-aligned.
+            
+            e.g.
+
+            - top
+            <div className="w-full fixed top-0 right-0 left-0 z-20 flex items-center justify-center py-2 pointer-events-none">
+              <button className="w-212 relative block pointer-events-auto cursor-pointer">{...}</button>
+            </div>
+
+            - bottom - has bottom-0, right-0, left-0
+            - left/right - you can figure these out
+
            */}
           <div className="flex w-full z-20 justify-center fixed top-2">
             <button

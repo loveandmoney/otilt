@@ -2,6 +2,7 @@ module.exports = {
   theme: {
     colors: {
       white: `#ffffff`,
+      // @Wil - other color definitions go here
       black: `#000000`
     },
     screens: {
