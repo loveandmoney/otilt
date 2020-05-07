@@ -1,8 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const Layout = ({ children, className }) => (
-  <main className={`layout ${className}`}>{children}</main>
+const Layout = ({ children, className, style }) => (
+  <main style={!style ? {} : style} className={`layout ${className}`}>
+    {children}
+  </main>
 );
 
 export default Layout;

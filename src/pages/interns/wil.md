@@ -3,39 +3,86 @@ templateKey: intern-page
 title: Wil
 seoDescription: ""
 seoKeywords: ""
+themes: [
+  {
+    name: "code",
+    position: "top",
+    image: /uploads/ozzy-office-hover.png,
+    imageAlt: "Drawing",
+    primaryColour: "#502d1b",
+    secondaryColour: "#e683a4",
+    heading: "<span>Pat’s pants, passwords<br />&amp; douchebag pool<br />table owners.</span>"
+  },
+   {
+    name: "nerd-powers",
+    position: "right",
+    image: /uploads/ozzy-design-hover.png,
+    imageAlt: "Graphic design poster",
+    primaryColour: "#1b65ce",
+    secondaryColour: "#f4b233",
+    heading: "<span>The age old question:<br />Is This Graphic Designs?<br />(Hint: 5 degrees)</span>"
+  },
+   {
+    name: "life",
+    position: "bottom",
+    image: /uploads/ozzy-life-hover.png,
+    imageAlt: "Component updates available alert",
+    primaryColour: "#d23c1c",
+    secondaryColour: "#5bb6ea",
+    heading: "<span>Vegan cheezies, Fairy<br />Floss, &amp; first time<br />birthday cakes.</span>"
+  },
+   {
+    name: "pretty",
+    position: "left",
+    image: /uploads/ozzy-technical-hover.png,
+    imageAlt: "Pizza",
+    primaryColour: "#9ad9b1",
+    secondaryColour: "#b4204c",
+    heading: "<span>Old mates Figma,<br />Dimension, Principle &amp;<br />Pantone.</span>"
+  }
+]
 days: [
   {
+    date: "04.27",
     absent: true
   },
   {
+    date: "04.28",
     absent: true
   },
   {
+    date: "04.29",
     absent: true
   },
   {
     dayCount: 1, 
     date: "04.30",
-    learned: "Using a constructor to set state and bind is for the elderly."
+    learned: "Using a constructor to set state and bind is for the elderly.",
+    theme: "code"
   },
   { 
     dayCount: 2, 
     date: "05.01",
-    learned: "Coordinating markdown and graphql queries like a true nerd"
+    learned: "Coordinating markdown and graphql queries like a true nerd",
+    theme: "nerd-powers"
   },
   {
+    date: "05.04",
     absent: true
   },
   {
+    date: "05.05",
     absent: true
   },
   {
+    date: "05.06",
     absent: true
   },  
   {
     dayCount: 3, 
     date: "05.07",
-    learned: ""
+    learned: "my first big boy parallax <3",
+    theme: "pretty"
   },
   { 
     dayCount: 4, 
@@ -43,12 +90,15 @@ days: [
     learned: ""
   },
   {
+    date: "05.11",
     absent: true
   },
   {
+    date: "05.12",
     absent: true
   },
   {
+    date: "05.13",
     absent: true
   },  
   {
@@ -62,12 +112,15 @@ days: [
     learned: ""
   },
   {
+    date: "05.18",
     absent: true
   },
   {
+    date: "05.19",
     absent: true
   },
   {
+    date: "05.20",
     absent: true
   },  
   {
@@ -81,12 +134,15 @@ days: [
     learned: ""
   },
   {
+    date: "05.25",
     absent: true
   },
   {
+    date: "05.26",
     absent: true
   },
   {
+    date: "05.27",
     absent: true
   },  
   {
@@ -100,12 +156,15 @@ days: [
     learned: ""
   },
   {
+    date: "06.01",
     absent: true
   },
   {
+    date: "06.02",
     absent: true
   },
   {
+    date: "06.03",
     absent: true
   },  
   {

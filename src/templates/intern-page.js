@@ -3,88 +3,27 @@
 
 import React, { Component, useContext } from "react";
 import { graphql } from "gatsby";
+import Img from "gatsby-image";
 import { AppContext } from "~context/AppContext";
+import { DocumentContext } from "~context/DocumentContext";
 import Layout from "~components/Layout";
 import SEO from "~components/SEO";
 import { fancyLog } from "~utils/helpers";
 
+import backArrow from "../assets/images/arrows/arrow-left-curved-white.svg";
+
 class InternPageComponent extends Component {
   state = {
     openCalendarSquare: null,
-    theme: `default`
+    appliedTheme: `default`,
+    hoveredButton: null
   };
 
-  // @Dan so is this theme data gonna feed in from markdown later? I suppose we'll use inline styles? and dangerouslySetHTML?
-  // @Wil - Yeah, that'll werk
-  themes = {
-    default: {
-      bgStyle: `bg-black`,
-      fontStyle: `text-white`,
-      lessonStyle: `bg-white text-black`,
-      // we use <br />'s rather than padding, we wrap these babies in a plain old span, so the semantics and style can be handled by render
-      headingText: (
-        <span>
-          One Thing I<br />
-          Learned Today
-        </span>
-      )
-    },
-    technical: {
-      bgStyle: `bg-green`,
-      fontStyle: `text-lipstick`,
-      lessonStyle: `bg-lipstick text-green`,
-      headingText: (
-        <span>
-          Old mates Figma,
-          <br />
-          Dimension, Principle &amp;
-          <br />
-          Pantone.
-        </span>
-      )
-    },
-    life: {
-      bgStyle: `bg-red`,
-      fontStyle: `text-blue-light`,
-      lessonStyle: `bg-blue-light text-red`,
-      headingText: (
-        <span>
-          Vegan cheezies, Fairy
-          <br />
-          Floss, &amp; first time
-          <br />
-          birthday cakes.
-        </span>
-      )
-    },
-    design: {
-      bgStyle: `bg-blue-royal`,
-      fontStyle: `text-gold`,
-      lessonStyle: `bg-gold text-blue-royal`,
-      headingText: (
-        <span>
-          The age old question:
-          <br />
-          Is This Graphic Designs?
-          <br />
-          (Hint: 5 degrees)
-        </span>
-      )
-    },
-    office: {
-      bgStyle: `bg-brown`,
-      fontStyle: `text-pink`,
-      lessonStyle: `bg-pink text-brown`,
-      headingText: (
-        <span>
-          Pat’s pants, passwords
-          <br />
-          &amp; douchebag pool
-          <br />
-          table owners.
-        </span>
-      )
-    }
+  defaultTheme = {
+    name: `default`,
+    primaryColour: `#000000`,
+    secondaryColour: `#ffffff`,
+    heading: `<span>One Thing I<br />Learned Today</span>`
   };
 
   componentDidMount() {
@@ -113,32 +52,42 @@ class InternPageComponent extends Component {
 
   handleThemeButtonClick = e => {
     this.setState({
-      theme: e.currentTarget.attributes.getNamedItem(`data-theme`).value
+      appliedTheme: e.currentTarget.attributes.getNamedItem(`data-theme`).value
+    });
+  };
+
+  //
+
+  handleThemeButtonMouseOver = e => {
+    this.setState({
+      hoveredButton: e.currentTarget.attributes.getNamedItem(`data-theme`).value
+    });
+  };
+
+  //
+
+  handleThemeButtonMouseOut = () => {
+    this.setState({
+      hoveredButton: null
     });
   };
 
   //
 
   render() {
-    const { frontmatter, location } = this.props;
+    const { frontmatter, location, documentContext } = this.props;
+    const bannerTransform = `translateY(${documentContext.scrollTop * 0.15}px)`;
 
-    const { days } = frontmatter;
+    const { days, themes } = frontmatter;
 
-    const { openCalendarSquare, theme } = this.state;
+    const { openCalendarSquare, appliedTheme, hoveredButton } = this.state;
 
-    const { bgStyle, fontStyle, lessonStyle, headingText } = this.themes[theme];
+    const appliedThemeProperties =
+      themes.find(c => c.name === appliedTheme) || this.defaultTheme;
 
-    const Heading = ({ children }) => {
-      return (
-        <h1
-          className={`mt-6 mb-12 font-bold animation-appear ${
-            theme === `default` ? `f1` : `f2`
-          }`}
-        >
-          {children}
-        </h1>
-      );
-    };
+    const { primaryColour, secondaryColour, heading } = appliedThemeProperties;
+
+    console.log(themes);
 
     const absentDaySVG = (
       <div className="square">
@@ -164,6 +113,25 @@ class InternPageComponent extends Component {
       </div>
     );
 
+    const buttonPositionStyles = {
+      top: {
+        container: `w-full top-0 right-0 left-0 py-4`,
+        button: ``
+      },
+      right: {
+        container: `h-screen top-0 right-0 bottom-0 flex-col w-0 mx-8`,
+        button: `rotate-90`
+      },
+      bottom: {
+        container: `w-full right-0 bottom-0 left-0 py-4`,
+        button: `rotate-180`
+      },
+      left: {
+        container: `h-screen top-0 bottom-0 left-0 flex-col w-0 mx-8`,
+        button: `rotate-270`
+      }
+    };
+
     return (
       <>
         <SEO
@@ -172,101 +140,106 @@ class InternPageComponent extends Component {
           customKeywords={frontmatter.seoKeywords}
           path={location.pathname}
         />
-        {/* @Dan there's still a padding at the top of the main container, which kinda stuffs up the opening viewport */}
-        {/* @Wil - remove "pt-12" from the Layout className */}
         <Layout
-          className={`intern-page w-full relative flex flex-col justify-between pt-12 pb-48 transition-background ${bgStyle} ${fontStyle}`}
+          className="intern-page w-full relative flex flex-col justify-between pb-48 transition-background"
+          style={{ backgroundColor: primaryColour, color: secondaryColour }}
         >
-          {/* // */}
-          {/* @Dan I wrestled with these buttons for a bit.. tried one container, no container, settled on this structure..
-               So I'm basically just using 4x h-full or w-full containers to center the buttons. It's a bit weird. Ain't perfect (bottom and top aren't the same for some reason..)
-    
-               // also, there's a lot of repititon here, between and within the buttons, 
-               // it'd be nice if we did a map with parameters feeding from md or some static varible or something, 
-               // but might be tricky with the layout sitch. Lemme know thoughts.
-           */}
+          <button
+            type="button"
+            data-theme="default"
+            onClick={this.handleThemeButtonClick}
+            className={`${
+              appliedTheme === `default` ? `hidden` : `fixed`
+            } top-0 left-0 m-6`}
+          >
+            {/* @Dan if we wanted to add a nice transition to this button, how would you usually do it, seeing as we want display: none on the button when it's hidden, and you can't animate display? */}
+            <img src={backArrow} alt="back arrow" />
+          </button>
 
-          {/*
-            @Wil
-            
-            I think having one container per button is probably fine, since markdown might have 0, 1, 2, 3 or all 4 defined.
-            The reason for the top/bottom buttons being different is that the buttons themselves are fixed and aligned to the top of the parent containers, which are also fixed.
-            You wouldn't need to put next a second fixed element inside a fixed parent unless you're doing something fancy with clipping.
+          {themes.map(
+            ({
+              name,
+              position,
+              primaryColour: localPrimaryColour,
+              secondaryColour: localSecondaryColour,
+              imageAlt,
+              image
+            }) => {
+              //
 
-            I'd suggest rewriting these as fixed containers with padding and relative/flex-aligned buttons (being mindful of parent/child pointer-events). This would
-            also mean that instead of setting a fixed width for the buttons, you can use py/px, and they'll resize automatically based on the button text itself, but still
-            be center-aligned.
-            
-            e.g.
+              const buttonActiveStyle = {
+                backgroundColor: localSecondaryColour,
+                color: localPrimaryColour
+              };
 
-            - top
-            <div className="w-full fixed top-0 right-0 left-0 z-20 flex items-center justify-center py-2 pointer-events-none">
-              <button className="w-212 relative block pointer-events-auto cursor-pointer">{...}</button>
-            </div>
+              const buttonInactiveStyle = {
+                backgroundColor: primaryColour,
+                color: secondaryColour,
+                borderColor: `#ffffff`
+              };
 
-            - bottom - has bottom-0, right-0, left-0
-            - left/right - you can figure these out
+              const { container, button } = buttonPositionStyles[position];
 
-           */}
-          <div className="flex w-full z-20 justify-center fixed top-2">
-            <button
-              type="button"
-              data-theme="office"
-              onClick={this.handleThemeButtonClick}
-              className={`w-212 fixed z-20 border-2 border-solid transition-background rounded-18 ${
-                theme === `office`
-                  ? `${lessonStyle}`
-                  : `border-white ${bgStyle}`
-              }`}
-            >
-              OFFICE
-            </button>
-          </div>
-          <div className="flex flex-col h-screen w-0 z-20 justify-center items-center fixed right-2">
-            <button
-              type="button"
-              data-theme="design"
-              onClick={this.handleThemeButtonClick}
-              className={`w-212 fixed z-20 border-2 border-solid transition-background rounded-18 rotate-90 ${
-                theme === `design`
-                  ? `${lessonStyle}`
-                  : `border-white ${bgStyle}`
-              }`}
-            >
-              DESIGN
-            </button>
-          </div>
-          <div className="flex w-full z-20 justify-center fixed bottom-2">
-            <button
-              type="button"
-              data-theme="life"
-              onClick={this.handleThemeButtonClick}
-              className={`w-212 fixed z-20 border-2 border-solid transition-background rounded-18 rotate-180 ${
-                theme === `life` ? `${lessonStyle}` : `border-white ${bgStyle}`
-              }`}
-            >
-              LIFE
-            </button>
-          </div>
-          <div className="flex flex-col h-screen w-0 z-20 justify-center items-center fixed left-2">
-            <button
-              type="button"
-              data-theme="technical"
-              onClick={this.handleThemeButtonClick}
-              className={`w-212 fixed z-20 border-2 border-solid transition-background rounded-18 rotate-270 ${
-                theme === `technical`
-                  ? `${lessonStyle}`
-                  : `border-white ${bgStyle}`
-              }`}
-            >
-              TECHNICAL
-            </button>
-          </div>
+              return (
+                <div key={name}>
+                  <div
+                    className={`fixed z-20 flex items-center justify-center pointer-events-none ${container}`}
+                  >
+                    {/* @Dan for the left and right containers, I've had to set width = 0 and a margin to keep it off the edge, 
+                        cause if we let width = auto it takes the non-rotated width of the button
+                        any other ideas here?? 
+                   */}
+                    <button
+                      type="button"
+                      data-theme={name}
+                      onClick={this.handleThemeButtonClick}
+                      onMouseOver={this.handleThemeButtonMouseOver}
+                      onFocus={this.handleThemeButtonMouseOver}
+                      onMouseLeave={this.handleThemeButtonMouseOut}
+                      style={
+                        appliedTheme === name
+                          ? buttonActiveStyle
+                          : buttonInactiveStyle
+                      }
+                      className={`px-8 relative block z-20 border-2 border-solid transition-background rounded-18 pointer-events-auto whitespace-no-wrap	${button}`}
+                    >
+                      {name.toUpperCase()}
+                    </button>
+                  </div>
 
-          <section className="w-full h-screen flex flex-col justify-center text-center">
+                  <div
+                    className={`w-full h-full top-0 flex items-center justify-center z-40 pointer-events-none ${
+                      hoveredButton === name ? `fixed` : `hidden`
+                    }`}
+                  >
+                    <Img
+                      className="intern-page__theme-image block"
+                      fluid={image.childImageSharp.fluid}
+                      alt={imageAlt}
+                    />
+                  </div>
+                </div>
+              );
+            }
+          )}
+
+          <section
+            className="w-full h-screen flex flex-col justify-center text-center pointer-events-none animation-appear"
+            style={{ transform: bannerTransform }}
+            // @Dan this parallax is really janky when you scroll through on a mouse, for obvious reasons.
+            //      Do we just assume no one uses a mouse or can we improve it?
+          >
             <h3 className="b2">IN TERN PRESENTS</h3>
 
-            <Heading>{headingText}</Heading>
+            <h1
+              className={`mt-6 mb-12 font-bold ${
+                appliedTheme === `default` ? `f1` : `f2`
+              }`}
+              dangerouslySetInnerHTML={{ __html: heading }}
+            />
+            {/* @Dan the animation-appear doens't happen when we change themes, which it used to, 
+                I think maybe it's too slow now that we are getting the heading html from markdown rather than a static variable? Maybe, I'm not sure.    
+            */}
 
             <p className="b2">FOR THREE MONTHS. AT LOVE + MONEY.</p>
             <p className="mt-1 b2">200 GERTRUDE STREET, FITZROY, INTERNET.</p>
@@ -274,9 +247,7 @@ class InternPageComponent extends Component {
           </section>
 
           <section className="w-full flex flex-col px-24">
-            <ol
-              className={`flex text-center sticky top-0 z-10 transition-background ${bgStyle}`}
-            >
+            <ol className="flex text-center sticky top-0 z-10 transition-background">
               <li className="w-1/5 py-3 f4">M</li>
               <li className="w-1/5 py-3 f4">T</li>
               <li className="w-1/5 py-3 f4">W</li>
@@ -285,7 +256,7 @@ class InternPageComponent extends Component {
             </ol>
 
             <ol className="flex flex-wrap">
-              {days.map(({ absent, dayCount, date, learned }, index) => {
+              {days.map(({ absent, dayCount, date, learned, theme }, index) => {
                 const thisSquareIsActive = openCalendarSquare === dayCount;
 
                 const withBorderBottom = index >= days.length - 5;
@@ -295,11 +266,14 @@ class InternPageComponent extends Component {
 
                 return (
                   <li
-                    key={`${date}`} // atm this will make the console cry cause there are heaps of null dates in wil.md, I will fix later
+                    key={`${date}`}
                     className={`w-1/5 relative border-dotted border-white border-t-2 ${
                       withBorderRight ? `border-r-2` : ``
                     } ${withBorderBottom ? `border-b-2` : ``} border-l-2 `}
                   >
+                    {theme !== appliedTheme && appliedTheme !== `default` && (
+                      <div className="w-full h-full absolute top-0 z-10 blurred" />
+                    )}
                     {absent ? (
                       absentDaySVG
                     ) : (
@@ -308,8 +282,8 @@ class InternPageComponent extends Component {
                         className="square relative block cursor-default"
                         data-day-count={dayCount}
                         onMouseOver={this.handleMouseOver}
-                        onMouseOut={this.handleMouseOut} // @Derg using mouseout so that it handles leaving the calendar altogether - know any way to do this wiht one handler or is this ok?
-                        onBlur={this.handleMouseOut} // accessbility stuff <-->
+                        onMouseOut={this.handleMouseOut}
+                        onBlur={this.handleMouseOut}
                         onFocus={this.handleMouseOver}
                       >
                         <div>
@@ -321,7 +295,11 @@ class InternPageComponent extends Component {
                           <div
                             className={`${
                               thisSquareIsActive ? `opacity-100` : `opacity-0`
-                            } transition-opacity w-full h-full absolute top-0 p-4 text-left font-medium transition-background ${lessonStyle}`}
+                            } transition-opacity w-full h-full absolute top-0 p-4 text-left font-medium transition-background`}
+                            style={{
+                              backgroundColor: secondaryColour,
+                              color: primaryColour
+                            }}
                           >
                             <p>{learned}</p>
                           </div>
@@ -343,11 +321,13 @@ class InternPageComponent extends Component {
 
 const InternPage = ({ data, location }) => {
   const appContext = useContext(AppContext);
+  const documentContext = useContext(DocumentContext);
   const { frontmatter } = data.markdownRemark;
 
   return (
     <InternPageComponent
       appContext={appContext}
+      documentContext={documentContext}
       frontmatter={frontmatter}
       location={location}
     />
@@ -363,11 +343,27 @@ export const query = graphql`
         title
         seoDescription
         seoKeywords
+        themes {
+          name
+          position
+          primaryColour
+          secondaryColour
+          heading
+          imageAlt
+          image {
+            childImageSharp {
+              fluid(maxWidth: 1024, quality: 75) {
+                ...GatsbyImageSharpFluid_withWebp_noBase64
+              }
+            }
+          }
+        }
         days {
           absent
           dayCount
           date
           learned
+          theme
         }
       }
     }
