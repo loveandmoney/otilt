@@ -81,13 +81,14 @@ days: [
   {
     dayCount: 3, 
     date: "05.07",
-    learned: "my first big boy parallax <3",
+    learned: "My first real parallax <3",
     theme: "pretty"
   },
   { 
     dayCount: 4, 
     date: "05.08",
-    learned: ""
+    learned: "Dan isn't always smarter than php",
+    theme: "nerd-powers"
   },
   {
     date: "05.11",
