@@ -77,14 +77,14 @@ days: [
   {
     date: "05.06",
     absent: true
-  },  
+  },
   {
     dayCount: 3, 
     date: "05.07",
-    learned: "My first real parallax <3",
+    learned: "My first parallax <3",
     theme: "pretty"
   },
-  { 
+  {
     dayCount: 4, 
     date: "05.08",
     learned: "Dan isn't always smarter than php",
@@ -105,12 +105,14 @@ days: [
   {
     dayCount: 5, 
     date: "05.14",
-    learned: ""
+    learned: "The string/subfields error has sucked up many hours in the developer community",
+    theme: "code"
   },
   { 
     dayCount: 6, 
     date: "05.15",
-    learned: ""
+    learned: "The string/subfields solution was in my heart all along",
+    theme: "nerd-powers"
   },
   {
     date: "05.18",
