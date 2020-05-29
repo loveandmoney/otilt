@@ -129,12 +129,14 @@ days: [
   {
     dayCount: 7, 
     date: "05.21",
-    learned: ""
+    learned: "Center items independently with the transform/margin trick",
+    theme: "pretty"
   },
   { 
     dayCount: 8, 
     date: "05.22",
-    learned: ""
+    learned: "We are protectors of the css nation from the purge",
+    theme: "code"
   },
   {
     date: "05.25",
@@ -151,12 +153,14 @@ days: [
   {
     dayCount: 9, 
     date: "05.28",
-    learned: ""
+    learned: "Display grid is what real people use",
+    theme: "code"
   },
   { 
     dayCount: 10, 
     date: "05.29",
-    learned: ""
+    learned: "Javascript the controller, css the animator",
+    theme: "nerd-powers"
   },
   {
     date: "06.01",
