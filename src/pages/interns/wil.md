@@ -175,14 +175,58 @@ days: [
     absent: true
   },  
   {
-    dayCount: 11, 
+    dayCount: 11,
     date: "06.04",
-    learned: ""
+    learned: "use the same units for Y margins as you do for X scaling"
   },
   { 
-    dayCount: 12, 
+    dayCount: 12,
     date: "06.05",
-    learned: ""
+    learned: "spend time where you can go the furthest"
+  },
+  {
+    date: "06.08",
+    absent: true
+  },
+  {
+    date: "06.09",
+    absent: true
+  },
+  {
+    date: "06.10",
+    absent: true
+  },  
+  {
+    dayCount: 13, 
+    date: "06.11",
+    learned: "functional components and hooks are mad"
+  },
+  { 
+    dayCount: 14, 
+    date: "06.12",
+    learned: "when things get complicated, delete Dan's code and start again"
+  },
+  {
+    date: "06.15",
+    absent: true
+  },
+  {
+    date: "06.16",
+    absent: true
+  },
+  {
+    date: "06.17",
+    absent: true
+  },  
+  {
+    dayCount: 15, 
+    date: "06.18",
+    learned: "you can import SVGs and GIFs from markdown via image.publicURL"
+  },
+  { 
+    dayCount: 16, 
+    date: "06.19",
+    learned: "webworkers are a thing"
   },
 ]
 ---
