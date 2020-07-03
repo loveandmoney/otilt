@@ -228,5 +228,49 @@ days: [
     date: "06.19",
     learned: "webworkers are a thing"
   },
+  {
+    date: "06.22",
+    absent: true
+  },
+  {
+    date: "06.23",
+    absent: true
+  },
+  {
+    date: "06.24",
+    absent: true
+  },
+  {
+    dayCount: 17, 
+    date: "06.18",
+    learned: "how to config.yml & netlify CMS"
+  },
+  { 
+    dayCount: 18, 
+    date: "06.19",
+    learned: "require() is not always what it seems"
+  },
+  {
+    date: "06.29",
+    absent: true
+  },
+  {
+    date: "06.30",
+    absent: true
+  },
+  {
+    date: "07.01",
+    absent: true
+  },
+  {
+    dayCount: 19, 
+    date: "07.02",
+    learned: "exports.createPages for path transforms, exports.createSchemaCustomization for gql typedefs"
+  },
+  { 
+    dayCount: 20, 
+    date: "07.03",
+    learned: "we componentise our SVGs"
+  },
 ]
 ---
